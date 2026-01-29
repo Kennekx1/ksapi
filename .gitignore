@@ -1,0 +1,8 @@
+node_modules/
+venv/
+__pycache__/
+*.json
+*.ods
+*.png
+*.html
+.DS_Store
