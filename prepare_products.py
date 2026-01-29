@@ -1,16 +1,28 @@
 
 import pandas as pd
 import json
+import os
 
-file_path = "/home/usic/Рабочий стол/парс цены.ods"
+file_path = "/home/usic/Рабочий стол/парс июнь.ods"
 output_products = "/home/usic/.gemini/antigravity/scratch/kaspi/products.json"
 
 try:
-    # Read without header
-    df = pd.read_excel(file_path, engine="odf", header=None)
+    # Read with header
+    df = pd.read_excel(file_path, engine="odf")
     
-    # Assuming column 0 is the product name
-    products = df[0].astype(str).tolist()
+    # Column is likely 'Название ' (with space based on inspect)
+    # Let's try to find it dynamically to be safe, or hardcode if sure.
+    col_name = 'Название '
+    if col_name not in df.columns:
+        # Try stripping
+        df.columns = [c.strip() for c in df.columns]
+        col_name = 'Название'
+    
+    if col_name in df.columns:
+        products = df[col_name].astype(str).tolist()
+    else:
+        print(f"Column 'Название' not found. Available: {df.columns.tolist()}")
+        products = []
     
     # Filter out empty or nan
     products = [p for p in products if p and p.lower() != 'nan']

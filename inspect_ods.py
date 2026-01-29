@@ -5,7 +5,7 @@ import sys
 # Install odfpy if needed, usually pandas requires it for ods
 # But we assume the environment has it based on previous successful runs or we will find out.
 
-file_path = "/home/usic/Рабочий стол/парс цены.ods"
+file_path = "/home/usic/Рабочий стол/парс июнь.ods"
 
 try:
     df = pd.read_excel(file_path, engine="odf")
